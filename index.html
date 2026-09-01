@@ -58,9 +58,9 @@
 </head>
 <body>
   <div class="shell">
-    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="today" id="today"></div><div class="flags"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
+    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="flags"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
     <main>
-      <div class="date-banner"><span class="date-label">F.I.R.E. date</span><span class="date-value">May 18, 2033</span><span class="date-day">Wednesday</span></div>
+      <div class="date-banner"><span class="date-label">Today</span><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
       <p class="eyebrow">A date worth counting toward</p>
       <h1>Time until<br><em>the good part.</em></h1>
       <p class="intro">Every day between now and your F.I.R.E. date is one day closer to a life designed entirely by you.</p>
@@ -73,6 +73,7 @@
         <div class="unit"><div class="number" id="seconds">—</div><div class="label">Seconds</div></div>
         <div class="unit"><div class="number" id="milliseconds">—</div><div class="label">Milliseconds</div></div>
       </section>
+      <div class="target"><span class="target-line"></span><span>F.I.R.E. date &nbsp;·&nbsp; <strong>Wednesday, May 18, 2033</strong></span></div>
       <div class="progress-wrap"><div class="progress-meta"><span>Journey began · May 18, 2023</span><span id="percent">—</span></div><div class="track"><div id="progress"></div></div></div>
     </main>
     <footer><span>Make the years count.</span><span>Toronto time · EDT</span></footer>
@@ -84,10 +85,12 @@
     const target = targetDate.getTime();
     const $ = id => document.getElementById(id);
     const pad = n => String(n).padStart(2, '0');
-    $('today').textContent = new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date());
+    const dateFormatter = new Intl.DateTimeFormat('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
+    const weekdayFormatter = new Intl.DateTimeFormat('en-CA', { weekday: 'long' });
     function tick() {
-      const now = Date.now(); const remaining = Math.max(0, target - now);
-      const currentDate = new Date(now); let years = targetDate.getFullYear() - currentDate.getFullYear();
+      const now = Date.now(); const currentDate = new Date(now); const remaining = Math.max(0, target - now);
+      $('current-date').textContent = dateFormatter.format(currentDate); $('current-day').textContent = weekdayFormatter.format(currentDate);
+      let years = targetDate.getFullYear() - currentDate.getFullYear();
       let anniversary = new Date(currentDate); anniversary.setFullYear(currentDate.getFullYear() + years);
       if (anniversary > targetDate) { years--; anniversary = new Date(currentDate); anniversary.setFullYear(currentDate.getFullYear() + years); }
       let months = (targetDate.getFullYear() - anniversary.getFullYear()) * 12 + targetDate.getMonth() - anniversary.getMonth();
