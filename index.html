@@ -30,6 +30,9 @@
     .flag-hungary { display: block; background: linear-gradient(to bottom, #ce2939 0 33.33%, #fff 33.33% 66.66%, #477050 66.66% 100%); }
     .flag-side { height: 100%; background: #d52b3e; }
     .flag-leaf { color: #d52b3e; font: 40px/1 Georgia, serif; text-align: center; transform: translateY(-2px); }
+    .nav-date { display: flex; align-items: baseline; gap: 14px; margin-left: auto; margin-right: 30px; }
+    .nav-date .date-value { color: var(--ink); font: 500 clamp(18px, 2.1vw, 29px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
+    .nav-date .date-day { padding-left: 14px; color: var(--mint); font: 500 12px 'DM Mono', monospace; letter-spacing: .04em; }
     main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 5vh 0 4vh; }
     .date-banner { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 27px; }
     .date-label { color: var(--gold); font: 500 12px 'DM Mono', monospace; letter-spacing: .18em; text-transform: uppercase; }
@@ -59,9 +62,8 @@
 </head>
 <body>
   <div class="shell">
-    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="flags"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
+    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div><div class="flags"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
     <main>
-      <div class="date-banner"><span class="date-label">Today</span><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
       <div class="eyebrow-row"><p class="eyebrow" id="eyebrow">A date worth counting toward</p><p class="eyebrow">F.I.R.E. date · Wednesday, May 18, 2033</p></div>
       <h1>Time until<br><em>the good part.</em></h1>
       <p class="intro">Every day between now and your F.I.R.E. date is one day closer to a life designed entirely by you.</p>
