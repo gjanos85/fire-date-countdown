@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fire Date — May 18, 2033</title>
+  <meta name="theme-color" content="#10231f">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600&display=swap');
+
+    :root { --ink: #f6f1e8; --muted: #aab9ae; --line: rgba(246,241,232,.16); --gold: #f1bd73; --mint: #bbd6bd; }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; margin: 0; }
+    body {
+      color: var(--ink); background: #10231f; font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    body::before, body::after { content: ''; position: fixed; z-index: -1; border-radius: 50%; filter: blur(1px); pointer-events: none; }
+    body::before { width: 62vw; height: 62vw; left: -22vw; top: -30vw; background: radial-gradient(circle, rgba(218,154,82,.27), transparent 65%); }
+    body::after { width: 75vw; height: 75vw; right: -35vw; bottom: -40vw; background: radial-gradient(circle, rgba(63,126,109,.28), transparent 64%); }
+    .shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 34px 0 28px; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+    .mark { display: flex; align-items: center; gap: 11px; font: 500 12px 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; color: var(--mint); }
+    .mark-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px var(--gold); }
+    .today { color: var(--muted); font: 12px 'DM Mono', monospace; }
+    main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 8vh 0 7vh; }
+    .eyebrow { color: var(--gold); font: 500 13px 'DM Mono', monospace; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 22px; }
+    h1 { font: 500 clamp(48px, 8.1vw, 116px)/.95 'Playfair Display', Georgia, serif; letter-spacing: -.045em; max-width: 780px; margin: 0; }
+    h1 em { color: var(--gold); font-style: normal; }
+    .intro { color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 470px; margin: 26px 0 54px; }
+    .clock { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; max-width: 1180px; }
+    .unit { position: relative; padding: 25px 22px 22px; border: 1px solid var(--line); border-radius: 9px; background: rgba(246,241,232,.045); backdrop-filter: blur(12px); }
+    .unit::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(130deg, rgba(255,255,255,.07), transparent 38%); pointer-events: none; }
+    .number { font: 500 clamp(43px, 7vw, 84px)/1 'DM Mono', monospace; letter-spacing: -.08em; color: #fff8ed; }
+    .label { color: var(--muted); font: 11px 'DM Mono', monospace; letter-spacing: .14em; text-transform: uppercase; margin-top: 16px; }
+    .target { display: flex; align-items: center; gap: 19px; margin-top: 35px; color: var(--mint); font-size: 15px; }
+    .target-line { width: 65px; height: 1px; background: var(--gold); }
+    .target strong { color: var(--ink); font-weight: 500; }
+    .progress-wrap { margin-top: 60px; max-width: 760px; }
+    .progress-meta { display: flex; justify-content: space-between; color: var(--muted); font: 11px 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+    .track { height: 4px; border-radius: 10px; background: rgba(246,241,232,.13); overflow: hidden; }
+    #progress { width: 0%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--gold), #e8d196); transition: width 1s linear; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    footer span:last-child { color: var(--mint); font-family: 'DM Mono', monospace; }
+    @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 13vh 0 10vh; } .intro { font-size: 15px; margin-bottom: 35px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="today" id="today"></div></nav>
+    <main>
+      <p class="eyebrow">A date worth counting toward</p>
+      <h1>Time until<br><em>the good part.</em></h1>
+      <p class="intro">Every day between now and your Fire date is one day closer to a life designed entirely by you.</p>
+      <section class="clock" aria-label="Countdown to May 18, 2033">
+        <div class="unit"><div class="number" id="years">—</div><div class="label">Years</div></div>
+        <div class="unit"><div class="number" id="months">—</div><div class="label">Months</div></div>
+        <div class="unit"><div class="number" id="days">—</div><div class="label">Days</div></div>
+        <div class="unit"><div class="number" id="hours">—</div><div class="label">Hours</div></div>
+        <div class="unit"><div class="number" id="minutes">—</div><div class="label">Minutes</div></div>
+        <div class="unit"><div class="number" id="seconds">—</div><div class="label">Seconds</div></div>
+      </section>
+      <div class="target"><span class="target-line"></span><span>Fire date &nbsp;·&nbsp; <strong>Wednesday, May 18, 2033</strong></span></div>
+      <div class="progress-wrap"><div class="progress-meta"><span>Journey began · May 18, 2023</span><span id="percent">—</span></div><div class="track"><div id="progress"></div></div></div>
+    </main>
+    <footer><span>Make the years count.</span><span>Toronto time · EDT</span></footer>
+  </div>
+  <script>
+    // May 18, 2033 at midnight in Toronto (EDT, UTC−04:00).
+    const start = new Date('2023-05-18T00:00:00-04:00').getTime();
+    const targetDate = new Date('2033-05-18T00:00:00-04:00');
+    const target = targetDate.getTime();
+    const $ = id => document.getElementById(id);
+    const pad = n => String(n).padStart(2, '0');
+    $('today').textContent = new Intl.DateTimeFormat('en-CA', { dateStyle: 'medium' }).format(new Date());
+    function tick() {
+      const now = Date.now(); const remaining = Math.max(0, target - now); const totalSeconds = Math.floor(remaining / 1000);
+      const currentDate = new Date(now); let years = targetDate.getFullYear() - currentDate.getFullYear();
+      let anniversary = new Date(currentDate); anniversary.setFullYear(currentDate.getFullYear() + years);
+      if (anniversary > targetDate) { years--; anniversary = new Date(currentDate); anniversary.setFullYear(currentDate.getFullYear() + years); }
+      let months = (targetDate.getFullYear() - anniversary.getFullYear()) * 12 + targetDate.getMonth() - anniversary.getMonth();
+      let monthMark = new Date(anniversary); monthMark.setMonth(anniversary.getMonth() + months);
+      if (monthMark > targetDate) { months--; monthMark = new Date(anniversary); monthMark.setMonth(anniversary.getMonth() + months); }
+      const leftoverSeconds = Math.max(0, Math.floor((target - Math.max(now, monthMark.getTime())) / 1000));
+      const days = Math.floor(leftoverSeconds / 86400); const hours = Math.floor(leftoverSeconds % 86400 / 3600); const minutes = Math.floor(leftoverSeconds % 3600 / 60); const seconds = leftoverSeconds % 60;
+      $('years').textContent = Math.max(0, years); $('months').textContent = Math.max(0, months); $('days').textContent = days; $('hours').textContent = pad(hours); $('minutes').textContent = pad(minutes); $('seconds').textContent = pad(seconds);
+      const elapsed = Math.min(1, Math.max(0, (now - start) / (target - start))); $('progress').style.width = (elapsed * 100).toFixed(5) + '%'; $('percent').textContent = (elapsed * 100).toFixed(2) + '% complete';
+      if (remaining === 0) { $('eyebrow').textContent = 'Today is the day'; $('intro').textContent = 'The good part starts now.'; }
+    }
+    tick(); setInterval(tick, 1000);
+  </script>
+</body>
+</html>
