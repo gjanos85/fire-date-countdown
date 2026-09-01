@@ -35,7 +35,8 @@
     .date-label { color: var(--gold); font: 500 12px 'DM Mono', monospace; letter-spacing: .18em; text-transform: uppercase; }
     .date-value { color: var(--ink); font: 500 clamp(30px, 4.2vw, 58px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .date-day { padding-left: 24px; border-left: 1px solid var(--line); color: var(--mint); font: 500 16px 'DM Mono', monospace; letter-spacing: .04em; }
-    .eyebrow { color: var(--gold); font: 500 13px 'DM Mono', monospace; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 22px; }
+    .eyebrow-row { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 30px; margin-bottom: 22px; }
+    .eyebrow { color: var(--gold); font: 500 13px 'DM Mono', monospace; letter-spacing: .2em; text-transform: uppercase; margin: 0; }
     h1 { font: 500 clamp(48px, 8.1vw, 116px)/.95 'Playfair Display', Georgia, serif; letter-spacing: -.045em; max-width: 780px; margin: 0; }
     h1 em { color: var(--gold); font-style: normal; }
     .intro { color: var(--muted); font-size: 16px; line-height: 1.45; max-width: 470px; margin: 19px 0 34px; }
@@ -61,7 +62,7 @@
     <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="flags"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
     <main>
       <div class="date-banner"><span class="date-label">Today</span><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
-      <p class="eyebrow">A date worth counting toward</p>
+      <div class="eyebrow-row"><p class="eyebrow" id="eyebrow">A date worth counting toward</p><p class="eyebrow">F.I.R.E. date · Wednesday, May 18, 2033</p></div>
       <h1>Time until<br><em>the good part.</em></h1>
       <p class="intro">Every day between now and your F.I.R.E. date is one day closer to a life designed entirely by you.</p>
       <section class="clock" aria-label="Countdown to May 18, 2033">
@@ -73,7 +74,6 @@
         <div class="unit"><div class="number" id="seconds">—</div><div class="label">Seconds</div></div>
         <div class="unit"><div class="number" id="milliseconds">—</div><div class="label">Milliseconds</div></div>
       </section>
-      <div class="target"><span class="target-line"></span><span>F.I.R.E. date &nbsp;·&nbsp; <strong>Wednesday, May 18, 2033</strong></span></div>
       <div class="progress-wrap"><div class="progress-meta"><span>Journey began · May 18, 2023</span><span id="percent">—</span></div><div class="track"><div id="progress"></div></div></div>
     </main>
     <footer><span>Make the years count.</span><span>Toronto time · EDT</span></footer>
