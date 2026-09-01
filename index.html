@@ -10,7 +10,7 @@
 
     :root { --ink: #f6f1e8; --muted: #aab9ae; --line: rgba(246,241,232,.16); --gold: #f1bd73; --mint: #bbd6bd; }
     * { box-sizing: border-box; }
-    body { zoom: .9; }
+    body { zoom: .8; }
     html, body { min-height: 100%; margin: 0; }
     body {
       color: var(--ink); background: #10231f; font-family: 'DM Sans', sans-serif;
@@ -30,15 +30,15 @@
     .flag-hungary { display: block; background: linear-gradient(to bottom, #ce2939 0 33.33%, #fff 33.33% 66.66%, #477050 66.66% 100%); }
     .flag-side { height: 100%; background: #d52b3e; }
     .flag-leaf { color: #d52b3e; font: 40px/1 Georgia, serif; text-align: center; transform: translateY(-2px); }
-    main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 8vh 0 7vh; }
-    .date-banner { display: flex; align-items: baseline; flex-wrap: wrap; gap: 16px 24px; margin-bottom: 38px; }
+    main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 5vh 0 4vh; }
+    .date-banner { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 27px; }
     .date-label { color: var(--gold); font: 500 12px 'DM Mono', monospace; letter-spacing: .18em; text-transform: uppercase; }
     .date-value { color: var(--ink); font: 500 clamp(30px, 4.2vw, 58px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .date-day { padding-left: 24px; border-left: 1px solid var(--line); color: var(--mint); font: 500 16px 'DM Mono', monospace; letter-spacing: .04em; }
     .eyebrow { color: var(--gold); font: 500 13px 'DM Mono', monospace; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 22px; }
     h1 { font: 500 clamp(48px, 8.1vw, 116px)/.95 'Playfair Display', Georgia, serif; letter-spacing: -.045em; max-width: 780px; margin: 0; }
     h1 em { color: var(--gold); font-style: normal; }
-    .intro { color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 470px; margin: 26px 0 54px; }
+    .intro { color: var(--muted); font-size: 16px; line-height: 1.45; max-width: 470px; margin: 19px 0 34px; }
     .clock { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; max-width: 1180px; }
     .unit { position: relative; padding: 25px 22px 22px; border: 1px solid var(--line); border-radius: 9px; background: rgba(246,241,232,.045); backdrop-filter: blur(12px); }
     .unit::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(130deg, rgba(255,255,255,.07), transparent 38%); pointer-events: none; }
@@ -47,13 +47,13 @@
     .target { display: flex; align-items: center; gap: 19px; margin-top: 35px; color: var(--mint); font-size: 15px; }
     .target-line { width: 65px; height: 1px; background: var(--gold); }
     .target strong { color: var(--ink); font-weight: 500; }
-    .progress-wrap { margin-top: 60px; max-width: 760px; }
+    .progress-wrap { margin-top: 38px; max-width: 760px; }
     .progress-meta { display: flex; justify-content: space-between; color: var(--muted); font: 11px 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
     .track { height: 4px; border-radius: 10px; background: rgba(246,241,232,.13); overflow: hidden; }
     #progress { width: 0%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--gold), #e8d196); transition: width 1s linear; }
     footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     footer span:last-child { color: var(--mint); font-family: 'DM Mono', monospace; }
-    @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 13vh 0 10vh; } .intro { font-size: 15px; margin-bottom: 35px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
+    @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 8vh 0 7vh; } .intro { font-size: 15px; margin-bottom: 28px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
   </style>
 </head>
 <body>
