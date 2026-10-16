@@ -31,36 +31,64 @@
     .flag-side { height: 100%; background: #d52b3e; }
     .flag-leaf { color: #d52b3e; font: 40px/1 Georgia, serif; text-align: center; transform: translateY(-2px); }
     .flight-path { position: absolute; z-index: 0; top: 7px; left: 38px; width: 96px; border-top: 1px dashed rgba(189,231,228,.5); }
-    .journey-stage { position: fixed; z-index: 1; inset: 0; top: 12vh; height: 150px; pointer-events: none; }
-    .journey-stage::before { content: ''; position: absolute; top: 76px; left: 10vw; right: 10vw; border-top: 1px dashed rgba(189,231,228,.25); }
-    .journey-stage::after { content: ''; position: absolute; top: 74px; left: 10vw; right: 10vw; height: 5px; background: linear-gradient(90deg, rgba(241,189,115,.18), transparent 46%, rgba(189,231,228,.18)); filter: blur(7px); }
-    .side-flag { position: absolute; top: 28px; display: flex; flex-direction: column; align-items: center; gap: 9px; color: var(--mint); font: 500 11px 'DM Mono', monospace; letter-spacing: .15em; text-transform: uppercase; }
-    .side-flag-canada { left: clamp(15px, 3.5vw, 64px); }
-    .side-flag-hungary { right: clamp(15px, 3.5vw, 64px); }
-    .side-flag .flag { width: clamp(74px, 8vw, 112px); height: clamp(50px, 5.2vw, 75px); box-shadow: 0 12px 30px rgba(1,13,31,.34); border: 1px solid rgba(255,255,255,.2); }
-    .side-flag .flag-leaf { font-size: clamp(36px, 4vw, 56px); }
-    .flight-route { position: absolute; left: 9.5vw; right: 9.5vw; top: 74px; height: 8px; overflow: visible; }
-    .airplane { position: absolute; z-index: 3; top: 38px; left: 8.5vw; width: clamp(54px, 6.8vw, 88px); height: clamp(34px, 4.2vw, 58px); color: var(--gold); filter: drop-shadow(0 7px 8px rgba(0,0,0,.3)); animation: takeoff-land 8s cubic-bezier(.35,.03,.3,1) infinite; }
-    .airplane svg { display: block; width: 100%; height: 100%; fill: currentColor; stroke: rgba(255,247,222,.72); stroke-width: .7; overflow: visible; }
-    .airplane .window { fill: #174b76; stroke: none; }
-    .airplane .highlight { fill: #ffe4a6; stroke: none; opacity: .9; }
-    @keyframes takeoff-land { 0% { transform: translate(0, 25px) rotate(-12deg) scale(.72); opacity: .55; } 10% { transform: translate(3vw, -2px) rotate(-6deg) scale(.9); opacity: 1; } 23% { transform: translate(13vw, -35px) rotate(-2deg) scale(1); } 50% { transform: translate(39vw, -44px) rotate(0deg) scale(1.05); } 77% { transform: translate(65vw, -33px) rotate(3deg) scale(1); } 90% { transform: translate(78vw, 2px) rotate(9deg) scale(.9); opacity: 1; } 100% { transform: translate(84vw, 25px) rotate(13deg) scale(.72); opacity: .55; } }
-    @media (prefers-reduced-motion: reduce) { .airplane { animation: none; transform: translate(39vw, -44px) scale(1.05); opacity: .85; } }
+    .journey-stage { --flight-time: 28s; position: relative; flex-shrink: 0; align-self: center; width: 125vw; height: 175px; margin-top: 8px; }
+    .side-flag { position: absolute; top: 105px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--mint); font: 500 10px 'DM Mono', monospace; letter-spacing: .16em; text-transform: uppercase; }
+    .side-flag-canada { left: 4%; }
+    .side-flag-hungary { right: 4%; }
+    .side-flag .flag { width: 80px; height: 48px; border: 1px solid rgba(255,255,255,.25); box-shadow: 0 8px 24px #06182a66; }
+    .side-flag .flag-leaf { font-size: 35px; }
+    .flight-route { position: absolute; left: calc(4% + 40px); right: calc(4% + 40px); top: 0; height: 100px; }
+    .route-arc { position: absolute; top: 22px; width: 100%; height: 73px; overflow: visible; }
+    .route-arc path { fill: none; stroke: #9dd6ef; stroke-opacity: .2; stroke-width: 1; stroke-dasharray: 3 7; vector-effect: non-scaling-stroke; }
+    .airplane { position: absolute; z-index: 3; top: 16px; left: 0; width: clamp(114px, 14vw, 190px); transform: translate(-50%, 40px); animation: flight-position var(--flight-time) linear infinite; will-change: left, transform; }
+    .aircraft-heading { animation: flight-heading var(--flight-time) linear infinite; }
+    .aircraft-pitch { animation: flight-pitch var(--flight-time) linear infinite; filter: drop-shadow(0 9px 7px #03132766); }
+    .airplane svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .landing-gear { transform-origin: 171px 74px; animation: retract-gear var(--flight-time) linear infinite; }
+    .navigation-light { animation: beacon 1.5s steps(1) infinite; }
+    .airport-runway { position: absolute; top: 95px; width: 128px; height: 3px; background: linear-gradient(90deg, transparent, #c7e3ec99, transparent); }
+    .airport-runway::after { content: ''; position: absolute; inset: 5px 15px auto; border-top: 1px dashed #e8c77b77; }
+    .runway-canada { left: calc(4% + 40px); transform: translateX(-50%); }
+    .runway-hungary { right: calc(4% + 40px); transform: translateX(50%); }
+    .route-caption { position: absolute; top: 126px; left: 50%; transform: translateX(-50%); color: #bdd7e4; font: 10px 'DM Mono', monospace; letter-spacing: .17em; white-space: nowrap; text-transform: uppercase; }
+    .flight-toggle { position: absolute; top: 148px; left: 50%; transform: translateX(-50%); border: 0; padding: 4px 9px; background: transparent; color: #91afc7; font: 10px 'DM Mono', monospace; cursor: pointer; }
+    .flight-toggle:hover, .flight-toggle:focus-visible { color: var(--gold); outline: 1px solid var(--line); border-radius: 4px; }
+    .journey-stage.is-paused *, .journey-stage.is-paused *::after { animation-play-state: paused !important; }
+    @keyframes flight-position {
+      0%, 3% { left: 0; transform: translate(-50%, 40px); }
+      7% { left: 5%; transform: translate(-50%, 36px); }
+      14% { left: 19%; transform: translate(-50%, 1px); }
+      23% { left: 45%; transform: translate(-50%, -17px); }
+      31% { left: 69%; transform: translate(-50%, -13px); }
+      39% { left: 90%; transform: translate(-50%, 20px); }
+      44%, 50%, 53% { left: 100%; transform: translate(-50%, 40px); }
+      57% { left: 95%; transform: translate(-50%, 36px); }
+      64% { left: 81%; transform: translate(-50%, 1px); }
+      73% { left: 55%; transform: translate(-50%, -17px); }
+      81% { left: 31%; transform: translate(-50%, -13px); }
+      89% { left: 10%; transform: translate(-50%, 20px); }
+      94%, 100% { left: 0; transform: translate(-50%, 40px); }
+    }
+    @keyframes flight-heading { 0%, 46% { transform: scaleX(1); } 49%, 96% { transform: scaleX(-1); } 99%, 100% { transform: scaleX(1); } }
+    @keyframes flight-pitch { 0%, 5%, 23%, 31%, 44%, 55%, 73%, 81%, 94%, 100% { transform: rotate(0deg); } 10%, 14%, 60%, 64% { transform: rotate(-11deg); } 39%, 89% { transform: rotate(5deg); } }
+    @keyframes retract-gear { 0%, 10%, 40%, 60%, 90%, 100% { transform: scaleY(1); opacity: 1; } 16%, 34%, 66%, 84% { transform: scaleY(0); opacity: 0; } }
+    @keyframes beacon { 0%, 12% { opacity: 1; } 13%, 100% { opacity: .15; } }
+    @media (prefers-reduced-motion: reduce) { .journey-stage * { animation: none !important; } .airplane { left: 50%; transform: translate(-50%, -10px); } .landing-gear { opacity: 0; } .flight-toggle { display: none; } }
     .nav-date { display: flex; align-items: baseline; gap: 14px; margin-left: auto; margin-right: 30px; }
     .nav-date .date-value { color: var(--ink); font: 500 clamp(18px, 2.1vw, 29px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .nav-date .date-day { padding-left: 14px; color: var(--mint); font: 500 clamp(18px, 2.1vw, 29px) 'DM Mono', monospace; letter-spacing: .04em; }
-    main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 5vh 0 4vh; }
+    main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 12px 0 24px; }
     .date-banner { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 27px; }
     .date-label { color: var(--gold); font: 500 12px 'DM Mono', monospace; letter-spacing: .18em; text-transform: uppercase; }
     .date-value { color: var(--ink); font: 500 clamp(30px, 4.2vw, 58px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .date-day { padding-left: 24px; border-left: 1px solid var(--line); color: var(--mint); font: 500 16px 'DM Mono', monospace; letter-spacing: .04em; }
     .eyebrow-row { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 30px; margin-bottom: 22px; }
     .eyebrow { color: var(--gold); font: 500 13px 'DM Mono', monospace; letter-spacing: .2em; text-transform: uppercase; margin: 0; }
-    h1 { font: 500 clamp(48px, 8.1vw, 116px)/.95 'Playfair Display', Georgia, serif; letter-spacing: -.045em; max-width: 780px; margin: 0; }
+    h1 { font: 500 clamp(48px, 7vw, 100px)/.95 'Playfair Display', Georgia, serif; letter-spacing: -.045em; max-width: 780px; margin: 0; }
     h1 em { color: var(--gold); font-style: normal; }
-    .intro { color: var(--muted); font-size: 16px; line-height: 1.45; max-width: 470px; margin: 19px 0 34px; }
+    .intro { color: var(--muted); font-size: 16px; line-height: 1.45; max-width: 470px; margin: 19px 0 24px; }
     .clock { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; max-width: 1180px; }
-    .unit { position: relative; padding: 25px 22px 22px; border: 1px solid rgba(185,220,250,.22); border-radius: 12px; background: linear-gradient(145deg, rgba(233,247,255,.12), rgba(129,188,231,.035)); box-shadow: 0 18px 35px rgba(3,17,37,.18); backdrop-filter: blur(12px); transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+    .unit { position: relative; padding: 21px 22px 18px; border: 1px solid rgba(185,220,250,.22); border-radius: 12px; background: linear-gradient(145deg, rgba(233,247,255,.12), rgba(129,188,231,.035)); box-shadow: 0 18px 35px rgba(3,17,37,.18); backdrop-filter: blur(12px); transition: transform .25s ease, border-color .25s ease, background .25s ease; }
     .unit:hover { transform: translateY(-4px); border-color: rgba(241,189,115,.55); background: linear-gradient(145deg, rgba(233,247,255,.17), rgba(129,188,231,.06)); }
     .unit::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(130deg, rgba(255,255,255,.07), transparent 38%); pointer-events: none; }
     .number { font: 500 clamp(43px, 7vw, 84px)/1 'DM Mono', monospace; letter-spacing: -.08em; color: #fff8ed; }
@@ -75,13 +103,61 @@
     footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     footer span:last-child { color: var(--mint); font-family: 'DM Mono', monospace; }
     @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 8vh 0 7vh; } .intro { font-size: 15px; margin-bottom: 28px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
-    @media (max-width: 650px) { .journey-stage { top: 12vh; } .side-flag .flag { width: 58px; height: 39px; } .side-flag .flag-leaf { font-size: 29px; } .side-flag { font-size: 8px; letter-spacing: .1em; } .airplane { width: 48px; height: 27px; } }
+    @media (max-width: 650px) { nav { flex-wrap: wrap; gap: 15px; } .nav-date { margin: 0; gap: 8px; } .nav-date .date-day { padding-left: 8px; } .route-caption { font-size: 8px; letter-spacing: .08em; } .side-flag { font-size: 9px; } .side-flag .flag { width: 60px; height: 38px; } .side-flag .flag-leaf { font-size: 29px; } .flight-route { left: calc(4% + 30px); right: calc(4% + 30px); } .airplane { width: 96px; } .airport-runway { width: 88px; } .runway-canada { left: calc(4% + 30px); } .runway-hungary { right: calc(4% + 30px); } main { padding-top: 12px; } }
   </style>
 </head>
 <body>
   <div class="shell">
     <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div></nav>
-    <div class="journey-stage" aria-label="A flight from Canada to Hungary"><div class="side-flag side-flag-canada"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><span>Canada</span></div><div class="side-flag side-flag-hungary"><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div><span>Hungary</span></div><span class="airplane" role="img" aria-label="Airplane taking off from Canada and landing in Hungary"><svg viewBox="0 0 120 64" aria-hidden="true"><path d="M8 29h31l14-13 5 2-6 13h23l26-13 5 4-21 17 21 17-5 4-26-13H52l6 13-5 2-14-13H8c-9 0-9-20 0-20Z"/><path class="highlight" d="M8 31h39l9-8 2 1-5 8h25l16-8 2 2-18 13H8c-4 0-5-8 0-8Z"/><circle class="window" cx="17" cy="35" r="2.2"/><circle class="window" cx="25" cy="35" r="2.2"/><circle class="window" cx="33" cy="35" r="2.2"/></svg></span></div>
+    <section class="journey-stage" aria-label="Round-trip flight between Canada and Hungary">
+      <div class="airport-runway runway-canada" aria-hidden="true"></div>
+      <div class="airport-runway runway-hungary" aria-hidden="true"></div>
+      <div class="side-flag side-flag-canada"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><span>Canada</span></div>
+      <div class="side-flag side-flag-hungary"><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div><span>Hungary</span></div>
+      <div class="flight-route" aria-hidden="true">
+        <svg class="route-arc" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0 100 C230 -15 770 -15 1000 100"/></svg>
+        <div class="airplane"><div class="aircraft-heading"><div class="aircraft-pitch">
+          <!-- Side-view airliner; the rounded nose and cockpit are on the RIGHT. -->
+          <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="fuselage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".48" stop-color="#eef5fc"/><stop offset=".7" stop-color="#b5ccde"/><stop offset="1" stop-color="#6e90ae"/></linearGradient>
+              <linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f9fcff"/><stop offset="1" stop-color="#6b91af"/></linearGradient>
+              <linearGradient id="engine" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e4eef7"/><stop offset=".5" stop-color="#819fb9"/><stop offset="1" stop-color="#24486b"/></linearGradient>
+              <linearGradient id="tail" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7cb85"/><stop offset="1" stop-color="#ce863d"/></linearGradient>
+            </defs>
+            <!-- Far wing and engine. -->
+            <path d="M132 58 98 27 108 25 180 59Z" fill="#789ab5" stroke="#c4d8e7" stroke-width=".7"/>
+            <path d="M118 46h25q7 5 0 11h-25Z" fill="url(#engine)"/>
+            <!-- Tail fin, stabilizer, and metallic fuselage. -->
+            <path d="M33 61 12 13 27 13 65 58Z" fill="url(#tail)" stroke="#ffdea5" stroke-width=".8"/>
+            <path d="m25 25 17 23-12-3-7-18Z" fill="#123b67"/>
+            <path d="M23 57 6 42 16 41 61 59Z" fill="url(#wing)"/>
+            <path d="M20 58Q67 50 237 52Q256 52 265 60L287 69Q293 73 284 77Q269 84 238 84H82Q41 82 18 70L9 63Z" fill="url(#fuselage)" stroke="#edf5fc" stroke-width=".8"/>
+            <path d="M25 70Q104 81 278 74L284 77Q264 83 238 83H83Q49 81 25 70Z" fill="#153c63"/>
+            <path d="M28 67H270L278 70H60Z" fill="#e4b870"/>
+            <!-- Cockpit glass, passenger windows, and doors. -->
+            <path d="m249 55 9 2 10 7h-14Z" fill="#15344c" stroke="#67879e" stroke-width=".6"/>
+            <path d="m244 55 4 .1 4 9h-8Z" fill="#244b6a"/>
+            <g fill="#244a69" stroke="#a9c6db" stroke-width=".5">
+              <rect x="66" y="58" width="4" height="5" rx="1.5"/><rect x="76" y="58" width="4" height="5" rx="1.5"/><rect x="86" y="58" width="4" height="5" rx="1.5"/><rect x="96" y="58" width="4" height="5" rx="1.5"/><rect x="106" y="58" width="4" height="5" rx="1.5"/><rect x="116" y="58" width="4" height="5" rx="1.5"/><rect x="126" y="58" width="4" height="5" rx="1.5"/><rect x="136" y="58" width="4" height="5" rx="1.5"/><rect x="146" y="58" width="4" height="5" rx="1.5"/><rect x="156" y="58" width="4" height="5" rx="1.5"/><rect x="166" y="58" width="4" height="5" rx="1.5"/><rect x="176" y="58" width="4" height="5" rx="1.5"/><rect x="186" y="58" width="4" height="5" rx="1.5"/><rect x="196" y="58" width="4" height="5" rx="1.5"/><rect x="206" y="58" width="4" height="5" rx="1.5"/><rect x="216" y="58" width="4" height="5" rx="1.5"/>
+            </g>
+            <g fill="none" stroke="#6c8ca4" stroke-width=".7"><rect x="53" y="57" width="7" height="15" rx="2"/><rect x="228" y="56" width="7" height="16" rx="2"/></g>
+            <!-- Main wing, winglet, pylon and turbofan. -->
+            <path d="m147 69-38 37 14 2 68-32Z" fill="url(#wing)" stroke="#d8e8f3" stroke-width=".8"/>
+            <path d="m109 106-4-9 5-2 5 11Z" fill="#e9b366"/>
+            <path d="m173 78 5 9h15l-3-7Z" fill="#98b4cb"/>
+            <path d="M164 86Q176 80 201 86L203 97Q177 102 163 96Z" fill="url(#engine)" stroke="#d7e7f2" stroke-width=".7"/>
+            <ellipse cx="201" cy="91.5" rx="5" ry="6.2" fill="#182c41" stroke="#c6d9e7" stroke-width="1.5"/>
+            <ellipse cx="201" cy="91.5" rx="2.2" ry="3.4" fill="#668199"/>
+            <g class="landing-gear"><path d="M149 82v14m-5 0h13m96-15v13" stroke="#bbcfde" stroke-width="2"/><g fill="#101c29" stroke="#748b9d" stroke-width="1"><circle cx="146" cy="98" r="4"/><circle cx="155" cy="98" r="4"/><circle cx="253" cy="96" r="3"/></g></g>
+            <circle class="navigation-light" cx="110" cy="105" r="1.7" fill="#ff5259"/>
+            <circle class="navigation-light" cx="145" cy="51" r="1.7" fill="#fff4d0"/>
+          </svg>
+        </div></div></div>
+      </div>
+      <span class="route-caption">Canada &nbsp; ⇄ &nbsp; Hungary · Our next chapter</span>
+      <button class="flight-toggle" type="button" aria-pressed="false">Pause flight</button>
+    </section>
     <main>
       <div class="eyebrow-row"><p class="eyebrow" id="eyebrow">A date worth counting toward</p><p class="eyebrow">F.I.R.E. date · Wednesday, May 18, 2033</p></div>
       <h1>Time until<br><em>the good part.</em></h1>
@@ -106,6 +182,12 @@
     const target = targetDate.getTime();
     const $ = id => document.getElementById(id);
     const pad = n => String(n).padStart(2, '0');
+    const flightToggle = document.querySelector('.flight-toggle');
+    flightToggle.addEventListener('click', () => {
+      const paused = document.querySelector('.journey-stage').classList.toggle('is-paused');
+      flightToggle.setAttribute('aria-pressed', String(paused));
+      flightToggle.textContent = paused ? 'Resume flight' : 'Pause flight';
+    });
     const dateFormatter = new Intl.DateTimeFormat('en-CA', { month: 'long', day: 'numeric', year: 'numeric' });
     const weekdayFormatter = new Intl.DateTimeFormat('en-CA', { weekday: 'long' });
     function tick() {
