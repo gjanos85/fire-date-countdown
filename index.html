@@ -19,7 +19,7 @@
     body::before, body::after { content: ''; position: fixed; z-index: -1; border-radius: 50%; filter: blur(1px); pointer-events: none; }
     body::before { width: 62vw; height: 62vw; left: -22vw; top: -30vw; background: radial-gradient(circle, rgba(241,189,115,.22), transparent 65%); }
     body::after { width: 75vw; height: 75vw; right: -35vw; bottom: -40vw; background: radial-gradient(circle, rgba(75,181,233,.25), transparent 64%); }
-    .shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 34px 0 28px; min-height: 100vh; display: flex; flex-direction: column; }
+    .shell { position: relative; z-index: 2; width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 34px 0 28px; min-height: 100vh; display: flex; flex-direction: column; }
     nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
     .mark { display: flex; align-items: center; gap: 11px; font: 500 12px 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; color: var(--mint); }
     .mark-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px var(--gold); }
@@ -31,10 +31,21 @@
     .flag-side { height: 100%; background: #d52b3e; }
     .flag-leaf { color: #d52b3e; font: 40px/1 Georgia, serif; text-align: center; transform: translateY(-2px); }
     .flight-path { position: absolute; z-index: 0; top: 7px; left: 38px; width: 96px; border-top: 1px dashed rgba(189,231,228,.5); }
-    .airplane { position: absolute; z-index: 2; top: -2px; left: 27px; width: 20px; height: 20px; color: var(--gold); filter: drop-shadow(0 3px 5px rgba(0,0,0,.28)); animation: cross-border 5.5s ease-in-out infinite; }
-    .airplane svg { display: block; width: 100%; height: 100%; fill: currentColor; }
-    @keyframes cross-border { 0%, 100% { transform: translate(0, 3px) rotate(7deg); } 50% { transform: translate(98px, -7px) rotate(-5deg); } }
-    @media (prefers-reduced-motion: reduce) { .airplane { animation: none; transform: translate(49px, -4px); } }
+    .journey-stage { position: fixed; z-index: 1; inset: 0; top: 22vh; height: 150px; pointer-events: none; }
+    .journey-stage::before { content: ''; position: absolute; top: 76px; left: 10vw; right: 10vw; border-top: 1px dashed rgba(189,231,228,.25); }
+    .journey-stage::after { content: ''; position: absolute; top: 74px; left: 10vw; right: 10vw; height: 5px; background: linear-gradient(90deg, rgba(241,189,115,.18), transparent 46%, rgba(189,231,228,.18)); filter: blur(7px); }
+    .side-flag { position: absolute; top: 28px; display: flex; flex-direction: column; align-items: center; gap: 9px; color: var(--mint); font: 500 11px 'DM Mono', monospace; letter-spacing: .15em; text-transform: uppercase; }
+    .side-flag-canada { left: clamp(15px, 3.5vw, 64px); }
+    .side-flag-hungary { right: clamp(15px, 3.5vw, 64px); }
+    .side-flag .flag { width: clamp(74px, 8vw, 112px); height: clamp(50px, 5.2vw, 75px); box-shadow: 0 12px 30px rgba(1,13,31,.34); border: 1px solid rgba(255,255,255,.2); }
+    .side-flag .flag-leaf { font-size: clamp(36px, 4vw, 56px); }
+    .flight-route { position: absolute; left: 9.5vw; right: 9.5vw; top: 74px; height: 8px; overflow: visible; }
+    .airplane { position: absolute; z-index: 3; top: 38px; left: 8.5vw; width: clamp(54px, 6.8vw, 88px); height: clamp(34px, 4.2vw, 58px); color: var(--gold); filter: drop-shadow(0 7px 8px rgba(0,0,0,.3)); animation: takeoff-land 8s cubic-bezier(.35,.03,.3,1) infinite; }
+    .airplane svg { display: block; width: 100%; height: 100%; fill: currentColor; stroke: rgba(255,247,222,.72); stroke-width: .7; overflow: visible; }
+    .airplane .window { fill: #174b76; stroke: none; }
+    .airplane .highlight { fill: #ffe4a6; stroke: none; opacity: .9; }
+    @keyframes takeoff-land { 0% { transform: translate(0, 25px) rotate(-12deg) scale(.72); opacity: .55; } 10% { transform: translate(3vw, -2px) rotate(-6deg) scale(.9); opacity: 1; } 23% { transform: translate(13vw, -35px) rotate(-2deg) scale(1); } 50% { transform: translate(39vw, -44px) rotate(0deg) scale(1.05); } 77% { transform: translate(65vw, -33px) rotate(3deg) scale(1); } 90% { transform: translate(78vw, 2px) rotate(9deg) scale(.9); opacity: 1; } 100% { transform: translate(84vw, 25px) rotate(13deg) scale(.72); opacity: .55; } }
+    @media (prefers-reduced-motion: reduce) { .airplane { animation: none; transform: translate(39vw, -44px) scale(1.05); opacity: .85; } }
     .nav-date { display: flex; align-items: baseline; gap: 14px; margin-left: auto; margin-right: 30px; }
     .nav-date .date-value { color: var(--ink); font: 500 clamp(18px, 2.1vw, 29px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .nav-date .date-day { padding-left: 14px; color: var(--mint); font: 500 clamp(18px, 2.1vw, 29px) 'DM Mono', monospace; letter-spacing: .04em; }
@@ -64,11 +75,13 @@
     footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
     footer span:last-child { color: var(--mint); font-family: 'DM Mono', monospace; }
     @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 8vh 0 7vh; } .intro { font-size: 15px; margin-bottom: 28px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
+    @media (max-width: 650px) { .journey-stage { top: 19vh; } .side-flag .flag { width: 58px; height: 39px; } .side-flag .flag-leaf { font-size: 29px; } .side-flag { font-size: 8px; letter-spacing: .1em; } .airplane { width: 48px; height: 27px; } }
   </style>
 </head>
 <body>
   <div class="shell">
-    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div><div class="flags" aria-label="A journey from Canada to Hungary"><span class="flight-path" aria-hidden="true"></span><span class="airplane" role="img" aria-label="Airplane traveling from Canada to Hungary"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 11.1 14 8.3V3.5c0-.8-.7-1.5-1.5-1.5S11 2.7 11 3.5v4.1L4.5 5.2 3.3 6.6l7.7 5.1-7.7 5.1 1.2 1.4 6.5-2.4v4.1c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5v-4.8l7.6-2.8c.6-.2.6-1.1 0-1.3Z"/></svg></span><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div></div></nav>
+    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div></nav>
+    <div class="journey-stage" aria-label="A flight from Canada to Hungary"><div class="side-flag side-flag-canada"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><span>Canada</span></div><div class="side-flag side-flag-hungary"><div class="flag flag-hungary" aria-label="Hungarian flag" role="img"></div><span>Hungary</span></div><span class="airplane" role="img" aria-label="Airplane taking off from Canada and landing in Hungary"><svg viewBox="0 0 120 64" aria-hidden="true"><path d="M8 29h31l14-13 5 2-6 13h23l26-13 5 4-21 17 21 17-5 4-26-13H52l6 13-5 2-14-13H8c-9 0-9-20 0-20Z"/><path class="highlight" d="M8 31h39l9-8 2 1-5 8h25l16-8 2 2-18 13H8c-4 0-5-8 0-8Z"/><circle class="window" cx="17" cy="35" r="2.2"/><circle class="window" cx="25" cy="35" r="2.2"/><circle class="window" cx="33" cy="35" r="2.2"/></svg></span></div>
     <main>
       <div class="eyebrow-row"><p class="eyebrow" id="eyebrow">A date worth counting toward</p><p class="eyebrow">F.I.R.E. date · Wednesday, May 18, 2033</p></div>
       <h1>Time until<br><em>the good part.</em></h1>
