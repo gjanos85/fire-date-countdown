@@ -120,12 +120,16 @@
     footer span:last-child { color: var(--mint); font-family: 'DM Mono', monospace; }
     @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 8vh 0 7vh; } .intro { font-size: 15px; margin-bottom: 28px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
     @media (max-width: 650px) { nav { flex-wrap: wrap; gap: 15px; } .nav-date { margin: 0; gap: 8px; } .nav-date .date-day { padding-left: 8px; } .journey-stage { --aircraft-width: 112px; --airport-inset: max(calc(4% + 30px), calc(var(--aircraft-width) / 2 + 8px)); } .route-caption { font-size: 8px; letter-spacing: .08em; } .side-flag { font-size: 9px; } .side-flag-canada { left: calc(var(--airport-inset) - 30px); } .side-flag-hungary { right: calc(var(--airport-inset) - 30px); } .side-flag .flag { width: 60px; height: 38px; } .side-flag .flag-leaf { font-size: 29px; } .airport-runway { width: 88px; } .ground-crew { top: 60px; width: 26px; height: 35px; } .crew-walker { width: 26px; height: 35px; } main { padding-top: 12px; } }
+    .airplane canvas { display: block; width: 100%; height: auto; pointer-events: none; }
+    .hungary-sun { position: absolute; width: 36px; height: 36px; top: 6px; right: calc(var(--airport-inset) - 18px); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff9cf, #ffd575 55%, #f2a53e); box-shadow: 0 0 22px #ffc96988, 0 0 55px #ffd57633; pointer-events: none; }
+    .hungary-sun::before { content: ''; position: absolute; inset: -10px; border: 1px solid #ffd77955; border-radius: 50%; }
   </style>
 </head>
 <body>
   <div class="shell">
     <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div></nav>
     <section class="journey-stage" aria-label="Air Canada inspired round-trip flight between Canada and Hungary, with a ground crew member turning the plane at each airport">
+      <span class="hungary-sun" aria-hidden="true"></span>
       <div class="airport-runway runway-canada" aria-hidden="true"></div>
       <div class="airport-runway runway-hungary" aria-hidden="true"></div>
       <div class="side-flag side-flag-canada"><div class="flag flag-canada" aria-label="Canadian flag" role="img"><span class="flag-side"></span><span class="flag-leaf">🍁</span><span class="flag-side"></span></div><span>Canada</span></div>
@@ -175,6 +179,7 @@
     <footer><span>Make the years count.</span><span>Toronto time · EDT</span></footer>
   </div>
   <script src="aircraft-3d.js"></script>
+  <script src="aircraft-fallback-3d.js"></script>
   <script>
     // May 18, 2033 at midnight in Toronto (EDT, UTC−04:00).
     const start = new Date('2023-05-18T00:00:00-04:00').getTime();
