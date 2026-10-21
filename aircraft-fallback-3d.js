@@ -8,7 +8,7 @@
   if (primary && primary.getContext('webgl')) return;
   const canvas = document.createElement('canvas');
   canvas.width = 720;
-  canvas.height = 360;
+  canvas.height = 288;
   canvas.setAttribute('aria-hidden', 'true');
   const ctx = canvas.getContext('2d');
   if (!ctx) return; // Keep the original illustration if canvas is unavailable.
@@ -43,19 +43,19 @@
     add([[-1.9,-.1,side*.205],[1.85,-.1,side*.18],[2.1,-.12,side*.09],[1.45,-.22,side*.115],[-1.6,-.22,side*.115]],dark,true);
     for (let i = 0; i < 17; i++) {
       const x = -1.65+i*.18;
-      add([[x,.085,side*.255],[x+.065,.085,side*.255],[x+.065,.145,side*.229],[x,.145,side*.229]], glass,true);
+      add([[x,.14,side*.228],[x+.065,.14,side*.228],[x+.065,.205,side*.17],[x,.205,side*.17]], glass,true);
     }
-    add([[1.58,.18,side*.18],[1.94,.16,side*.135],[2.12,.08,side*.12],[1.66,.08,side*.237]],glass,true);
+    add([[1.58,.20,side*.15],[1.94,.18,side*.105],[2.12,.12,side*.095],[1.66,.12,side*.21]],glass,true);
     // Swept wings and stabilizers have actual thickness, including winglets.
     slab([[.45,-.06,side*.16],[-.6,-.08,side*2.35],[-1.03,-.08,side*2.35],[-.55,-.06,side*.18]],.055,white);
     slab([[-1.76,.06,side*.1],[-2.3,.1,side*1.02],[-2.6,.1,side*1.02],[-2.32,.06,side*.1]],.045,white);
     slab([[-.6,-.08,side*2.35],[-.83,.24,side*2.43],[-1.03,.25,side*2.43],[-1.03,-.08,side*2.35]],.025,dark);
-    // Engine nacelles are open cylinders with recessed intake disks.
-    tube([[-.85,.12],[-.7,.19],[-.12,.19],[.05,.17]],-.37,side*.82,dark,24);
-    tube([[.052,.17],[.065,.145],[.052,.12],[-.07,.115]],-.37,side*.82,metal,24);
-    const fan = Array.from({length:24},(_,j) => [-.075,-.37+Math.cos(j*Math.PI/12)*.116,side*.82+Math.sin(j*Math.PI/12)*.116]);
-    add(fan,[12,24,34]);
-    slab([[-.55,-.08,side*.81],[-.2,-.08,side*.81],[-.2,-.31,side*.81],[-.55,-.31,side*.81]],.03,metal);
+    // Small nacelles sit out on the wings; nothing hangs beneath the fuselage.
+    slab([[-.36,-.08,side*1.15],[-.13,-.08,side*1.15],[-.13,-.2,side*1.15],[-.36,-.2,side*1.15]],.025,metal);
+    tube([[-.6,.065],[-.5,.10],[-.08,.12],[.12,.11]],-.22,side*1.15,dark,24);
+    tube([[.125,.11],[.13,.085],[-.015,.075]],-.22,side*1.15,metal,24);
+    const inlet = Array.from({length:24},(_,j) => [-.02,-.22+Math.cos(j*Math.PI/12)*.075,side*1.15+Math.sin(j*Math.PI/12)*.075]);
+    add(inlet,[12,24,34]);
     // Landing gear remains grounded through the crew's turnaround.
     tube([[1.45,.035],[1.49,.035]],-.41,side*.09,metal,8);
     add([[1.45,-.19,side*.09],[1.49,-.19,side*.09],[1.49,-.43,side*.09],[1.45,-.43,side*.09]],metal);
@@ -78,13 +78,13 @@
     return -Math.PI*2;
   }
   function draw(yaw) {
-    ctx.clearRect(0,0,720,360);
+    ctx.clearRect(0,0,720,288);
     const c=Math.cos(yaw), s=Math.sin(yaw), tilt=.24;
     const rotate = ([x,y,z]) => {
       const xx=x*c+z*s, zz=-x*s+z*c;
       return [xx,y*Math.cos(tilt)-zz*Math.sin(tilt),y*Math.sin(tilt)+zz*Math.cos(tilt)];
     };
-    const project = ([x,y,z]) => { const k=105*12/(12-z); return [360+x*k,220-y*k]; };
+    const project = ([x,y,z]) => { const k=125*12/(12-z); return [360+x*k,187-y*k]; };
     const sorted = faces.map(face => {
       const points=face.points.map(rotate);
       return {...face,points,depth:points.reduce((v,p)=>v+p[2],0)/points.length};
@@ -109,8 +109,7 @@
   function frame(now) {
     if (now-last>32 && !document.hidden) {
       const flight=aircraft.getAnimations().find(a=>a.animationName==='flight-position');
-      const duration=parseFloat(getComputedStyle(stage).getPropertyValue('--flight-time'))*1000||40000;
-      const phase=flight ? (Number(flight.currentTime||0)%duration)/duration : 0;
+      const phase=flight ? Number(flight.effect.getComputedTiming().progress||0) : 0;
       const yaw=motion.matches ? -.5 : heading(phase);
       // Cruise and pause keep the same angle; avoid repainting an unchanged mesh.
       if (lastYaw===null || Math.abs(yaw-lastYaw)>.0001) {

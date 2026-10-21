@@ -72,7 +72,7 @@
     }
     points.forEach((_, i) => { const j=(i+1)%points.length; quad(top[i],top[j],bottom[j],bottom[i],metal); });
   }
-  // A surface of revolution along X, also used for hollow nacelles.
+  // Rounded fuselage surface along the aircraft's longitudinal axis.
   function tube(sections, cy, cz, colour, textured = false, segments = 40) {
     for (let s=0;s<sections.length-1;s++) {
       const [x0,r0] = sections[s], [x1,r1] = sections[s+1];
@@ -88,16 +88,21 @@
       }
     }
   }
-  function disk(x,y,z,outer,inner,colour,segments=32) {
-    for(let i=0;i<segments;i++) {
-      const a=i/segments*2*Math.PI,b=(i+1)/segments*2*Math.PI;
-      quad([x,y+outer*Math.cos(a),z+outer*Math.sin(a)], [x,y+outer*Math.cos(b),z+outer*Math.sin(b)],
-        [x,y+inner*Math.cos(b),z+inner*Math.sin(b)], [x,y+inner*Math.cos(a),z+inner*Math.sin(a)],colour);
-    }
-  }
   function box(x,y,z,sx,sy,sz,colour) {
     const p=[]; for(let i=0;i<8;i++) p.push([x+(i&1?sx:-sx)/2,y+(i&2?sy:-sy)/2,z+(i&4?sz:-sz)/2]);
     [[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]].forEach(f=>quad(...f.map(i=>p[i]),colour));
+  }
+  function wingEngine(side) {
+    const cy=-.40,cz=side*1.9;
+    box(-.25,-.27,cz,.34,.27,.10,metal);
+    tube([[-.78,.10],[-.65,.17],[.1,.23],[.46,.225],[.58,.205]],cy,cz,dark);
+    tube([[.59,.205],[.60,.176],[.56,.158],[.38,.145]],cy,cz,[.66,.74,.8]);
+    for(let i=0;i<24;i++) {
+      const a=i/24*2*Math.PI,b=(i+1)/24*2*Math.PI;
+      triangle([.37,cy,cz],[.37,cy+.145*Math.cos(a),cz+.145*Math.sin(a)],
+        [.37,cy+.145*Math.cos(b),cz+.145*Math.sin(b)],[.08,.13,.18]);
+    }
+    tube([[.37,.036],[.47,.005]],cy,cz,metal,false,16);
   }
   const leaf = [[0,1],[.18,.55],[.36,.68],[.29,.25],[.64,.47],[.65,.19],[.92,.15],[.52,-.26],[.6,-.43],[.12,-.35],[.15,-.78],[-.15,-.78],[-.12,-.35],[-.6,-.43],[-.52,-.26],[-.92,.15],[-.65,.19],[-.64,.47],[-.29,.25],[-.36,.68],[-.18,.55]];
   function finLogo(z) {
@@ -120,18 +125,7 @@
       solid([[x,-.11,z],[x-.06,-.11,z],[x-.55,.1,z+side*.62],[x-.49,.1,z+side*.62]],.013,metal);
     }
     solid([[-2.95,.26,side*.25],[-4.18,.25,side*.3],[-4.55,.5,side*1.8],[-3.96,.55,side*1.83]],.065,white);
-    // Pylons, black engine barrels, silver inlet lips and recessed fans.
-    box(.1,-.51,side*1.4,.55,.55,.16,metal);
-    tube([[-.8,.15],[-.6,.26],[.3,.38],[.85,.4],[1,.37]],-.88,side*1.4,dark);
-    disk(1.01,-.88,side*1.4,.37,.295,[.7,.78,.84]);
-    tube([[.99,.295],[.66,.26]],-.88,side*1.4,[.035,.055,.075]);
-    disk(.65,-.88,side*1.4,.265,0,[.10,.16,.21]);
-    for(let i=0;i<14;i++) {
-      const a=i/14*2*Math.PI,b=a+.14;
-      triangle([.67,-.88,side*1.4],[.68,-.88+.235*Math.cos(a),side*1.4+.235*Math.sin(a)],
-        [.68,-.88+.235*Math.cos(b),side*1.4+.235*Math.sin(b)],[.37,.46,.53]);
-    }
-    tube([[.65,.055],[.88,.01]],-.88,side*1.4,metal,false,20);
+    wingEngine(side);
     box(-2.35,.23,side*4.32,.08,.07,.08,side>0?[.12,.9,.5]:[1,.07,.1]);
   }
   // Extruded vertical fin, with an actual maple leaf on both faces.
@@ -164,15 +158,15 @@
   function sidePaint(far) {
     ctx.save();if(far){ctx.translate(0,256);ctx.scale(1,-1);}
     ctx.fillStyle='#162c40';
-    for(let x=195;x<825;x+=26){ctx.beginPath();ctx.roundRect(x,71,10,9,3);ctx.fill();}
+    for(let x=195;x<825;x+=26){ctx.beginPath();ctx.roundRect(x,39,10,8,3);ctx.fill();}
     // Wraparound black cockpit mask follows the nose curvature on both sides.
-    ctx.fillStyle='#0c141c';ctx.beginPath();ctx.moveTo(854,57);ctx.lineTo(920,58);ctx.lineTo(973,77);ctx.lineTo(863,84);ctx.closePath();ctx.fill();
-    ctx.fillStyle='#83a5bb';ctx.beginPath();ctx.moveTo(864,61);ctx.lineTo(894,62);ctx.lineTo(910,76);ctx.lineTo(869,78);ctx.closePath();ctx.fill();
-    ctx.beginPath();ctx.moveTo(902,62);ctx.lineTo(919,64);ctx.lineTo(952,75);ctx.lineTo(920,76);ctx.closePath();ctx.fill();
-    ctx.strokeStyle='#8094a3';ctx.lineWidth=1.6;[166,830].forEach(x=>{ctx.strokeRect(x,54,15,35);});
+    ctx.fillStyle='#0c141c';ctx.beginPath();ctx.moveTo(854,28);ctx.lineTo(920,30);ctx.lineTo(973,45);ctx.lineTo(863,51);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#83a5bb';ctx.beginPath();ctx.moveTo(864,32);ctx.lineTo(894,34);ctx.lineTo(910,45);ctx.lineTo(869,47);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.moveTo(902,34);ctx.lineTo(919,36);ctx.lineTo(952,45);ctx.lineTo(920,45);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='#8094a3';ctx.lineWidth=1.6;[166,830].forEach(x=>{ctx.strokeRect(x,45,15,35);});
     ctx.save();if(far){ctx.translate(1020,0);ctx.scale(-1,1);}
-    ctx.font='bold 29px Arial';ctx.fillStyle='#121920';ctx.fillText('AIR CANADA',330,57);ctx.restore();
-    roundel(730,47,13);ctx.restore();
+    ctx.font='bold 21px Arial';ctx.fillStyle='#121920';ctx.fillText('AIR CANADA',330,31);ctx.restore();
+    roundel(730,24,9);ctx.restore();
   }
   sidePaint(false);sidePaint(true);
   const texture=gl.createTexture();gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texture);
