@@ -62,7 +62,7 @@
       42% { opacity: 1; transform: translateX(calc(6vw + var(--aircraft-width) / 2 + 44px)); }
       43.5% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .67)); }
       45.5% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .44)); }
-      46.5% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .40)); }
+      46.5% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .43 - var(--crew-width, 44px) * .3)); }
       49%, 50.2% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .34)); }
       52% { opacity: 1; transform: translateX(calc(var(--aircraft-width) * .55)); }
       55% { opacity: 1; transform: translateX(calc(6vw + var(--aircraft-width) / 2 + 44px)); }
@@ -124,15 +124,17 @@
     @media (max-width: 650px) { .shell { width: min(100% - 34px, 1180px); padding-top: 22px; } .today { display: none; } main { padding: 8vh 0 7vh; } .intro { font-size: 15px; margin-bottom: 28px; } .clock { grid-template-columns: repeat(2, 1fr); gap: 9px; } .unit { padding: 19px 16px 17px; } .number { font-size: clamp(35px, 15vw, 65px); } .label { margin-top: 11px; font-size: 10px; } footer { flex-direction: column; gap: 9px; } }
     @media (max-width: 650px) { nav { flex-wrap: wrap; gap: 15px; } .nav-date { margin: 0; gap: 8px; } .nav-date .date-day { padding-left: 8px; } .journey-stage { --aircraft-width: 112px; --airport-inset: max(calc(4% + 30px), calc(var(--aircraft-width) / 2 + 8px)); } .route-caption { font-size: 8px; letter-spacing: .08em; } .side-flag { font-size: 9px; } .side-flag-canada { left: calc(var(--airport-inset) - 30px); } .side-flag-hungary { right: calc(var(--airport-inset) - 30px); } .side-flag .flag { width: 60px; height: 38px; } .side-flag .flag-leaf { font-size: 29px; } .airport-runway { width: 88px; } .ground-crew { top: 60px; width: 26px; height: 35px; } .crew-walker { width: 26px; height: 35px; } main { padding-top: 12px; } }
     .airplane canvas { display: block; width: 100%; height: auto; pointer-events: none; }
-    .hungary-sun { position: absolute; z-index: 1; isolation: isolate; width: 38px; height: 38px; top: 21px; right: calc(var(--airport-inset) - 19px); border-radius: 50%; background: radial-gradient(circle at 33% 27%, #fffbd7, #ffdb78 48%, #f8b749 80%, #e89635); box-shadow: inset -2px -3px 5px #dd853733, inset 2px 2px 5px #fffce3aa, 0 0 var(--sun-glow, 23px) #ffd074a6, 0 0 55px #ffc26344; transform: translateY(var(--sun-bob, 0px)) scale(var(--sun-scale, 1)); pointer-events: none; }
-    .hungary-sun::before { content: ''; position: absolute; z-index: -2; inset: -17px; border-radius: 50%; background: repeating-conic-gradient(from 0deg, #ffe09aaa 0deg 3deg, transparent 3deg 30deg); mask-image: radial-gradient(circle, transparent 0 22px, #000 23px 30px, transparent 32px); transform: rotate(var(--sun-turn, 12deg)); }
-    .hungary-sun::after { content: ''; position: absolute; z-index: -1; inset: -9px; border: 1px solid #ffdf9d66; border-radius: 50%; box-shadow: 0 0 13px #ffdb7c44; transform: scale(var(--sun-halo, 1)); }
-    .sun-face { display: block; width: 100%; height: 100%; overflow: visible; }
-    .sun-neutral { opacity: calc(1 - var(--sun-smile, 0)); }
-    .sun-smile { opacity: var(--sun-smile, 0); }
+    .hungary-sun { position: absolute; z-index: 1; isolation: isolate; width: 38px; height: 38px; top: 21px; right: calc(var(--airport-inset) - 19px); border-radius: 50%; background: radial-gradient(circle at 32% 26%, #fffde2 0%, #ffe8a4 29%, #ffd16a 63%, #f5ac42 91%, #ec993b); box-shadow: inset -1px -2px 4px #d47d342e, inset 1px 1px 3px #ffffe8b3, 0 0 var(--sun-glow, 21px) #ffd07480, 0 0 44px #ffc26326; transform: translateY(var(--sun-bob, 0px)) scale(var(--sun-scale, 1)); pointer-events: none; }
+    .hungary-sun::before { content: ''; position: absolute; z-index: -2; inset: -23px; border-radius: 50%; background: radial-gradient(circle, #ffdd8530 12%, #ffc26716 40%, transparent 69%); transform: scale(var(--sun-halo, 1)); }
+    .hungary-sun::after { content: ''; position: absolute; inset: 1px; border-radius: 50%; background: radial-gradient(ellipse at 30% 22%, #fffff34d, transparent 55%); pointer-events: none; }
+    .sun-rays { position: absolute; z-index: -1; inset: -19px; width: 76px; height: 76px; overflow: visible; transform: rotate(var(--sun-turn, 12deg)); }
+    .sun-face { position: relative; z-index: 2; display: block; width: 100%; height: 100%; overflow: visible; }
+    .sun-expression { visibility: hidden; opacity: 0; transform-origin: 19px 22px; transform: translateY(1px) scale(.94); }
+    .hungary-sun[data-welcoming="true"] .sun-expression { visibility: visible; opacity: var(--sun-smile, 0); transform: translateY(calc(1px - var(--sun-smile, 0) * 1px)) scale(calc(.94 + var(--sun-smile, 0) * .06)); }
     .sun-glint { opacity: var(--sun-shimmer, .65); }
     .journey-stage { overflow: hidden; --airport-inset: max(calc(4% + 40px), calc(var(--aircraft-width) / 2 + 44px)); }
-    @media (max-width: 650px) { .journey-stage { --airport-inset: max(calc(4% + 30px), calc(var(--aircraft-width) / 2 + 40px)); } .ground-crew { top: 45px; width: 34px; height: 50px; } .crew-walker { width: 34px; height: 50px; } }
+    .ground-crew { --crew-width: 44px; top: 31px; width: 44px; height: 64px; } .crew-walker { width: 44px; height: 64px; }
+    @media (max-width: 650px) { .journey-stage { --airport-inset: max(calc(4% + 30px), calc(var(--aircraft-width) / 2 + 40px)); } .ground-crew { --crew-width: 38px; top: 39px; width: 38px; height: 56px; } .crew-walker { width: 38px; height: 56px; } }
   </style>
 </head>
 <body>
@@ -140,15 +142,18 @@
     <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div></nav>
     <section class="journey-stage" aria-label="Air Canada inspired round-trip flight between Canada and Hungary, with a ground crew member turning the plane at each airport">
       <span class="hungary-sun" aria-hidden="true" data-welcoming="false">
+        <svg class="sun-rays" viewBox="-38 -38 76 76" fill="none" stroke="#ffe3a3" stroke-linecap="round">
+          <g stroke-width="1.3" opacity=".72"><path d="M0-26v-7M26 0h7M0 26v7M-26 0h-7"/><path d="m18.4-18.4 4.9-4.9m-4.9 41.7 4.9 4.9m-41.7-4.9-4.9 4.9m4.9-41.7-4.9-4.9"/></g>
+          <g stroke-width=".9" opacity=".36"><path d="m10-24 1.5-3.7m12.5 17.7 3.7-1.5m-3.7 21.5 3.7 1.5m-17.7 12.5 1.5 3.7m-21.5-3.7-1.5 3.7m-12.5-17.7-3.7 1.5m3.7-21.5-3.7-1.5m17.7-12.5-1.5-3.7"/></g>
+        </svg>
         <svg class="sun-face" viewBox="0 0 38 38">
-          <path class="sun-glint" d="m9 4 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z" fill="#fffce9"/>
-          <g fill="#985024"><ellipse cx="12.5" cy="15.5" rx="1.5" ry="1.9"/><ellipse cx="25.5" cy="15.5" rx="1.5" ry="1.9"/></g>
-          <g fill="#fff6d8"><circle cx="12.1" cy="14.9" r=".45"/><circle cx="25.1" cy="14.9" r=".45"/></g>
-          <path class="sun-neutral" d="M14.5 24h9" fill="none" stroke="#a3562e" stroke-width="1.5" stroke-linecap="round"/>
-          <g class="sun-smile">
-            <g fill="#ee8f68" opacity=".6"><ellipse cx="9" cy="22" rx="3" ry="1.6"/><ellipse cx="29" cy="22" rx="3" ry="1.6"/></g>
-            <path d="M11.5 21.5Q19 25 26.5 21.5Q25 29.5 19 29Q13 29 11.5 21.5Z" fill="#9c4c28"/>
-            <path d="M13 22.8Q19 25.3 25 22.8L24 24.8Q19 26.6 14 24.8Z" fill="#fff6db"/>
+          <path class="sun-glint" d="M7 12a14 14 0 0 1 12-7" fill="none" stroke="#fffceb" stroke-width="1.2" stroke-linecap="round"/>
+          <g class="sun-expression">
+            <g fill="#895026"><ellipse cx="12.5" cy="16" rx="1.35" ry="1.8"/><ellipse cx="25.5" cy="16" rx="1.35" ry="1.8"/></g>
+            <g fill="#fff8df"><circle cx="12.1" cy="15.4" r=".45"/><circle cx="25.1" cy="15.4" r=".45"/></g>
+            <g fill="#ed966c" opacity=".45"><ellipse cx="9.5" cy="22" rx="2.6" ry="1.4"/><ellipse cx="28.5" cy="22" rx="2.6" ry="1.4"/></g>
+            <path d="M12 22Q19 25.5 26 22Q24.8 29 19 28.5Q13.2 29 12 22Z" fill="#98502c"/>
+            <path d="M13.5 23.3Q19 25.5 24.5 23.3L23.8 25Q19 26.4 14.2 25Z" fill="#fff8e3"/>
           </g>
         </svg>
       </span>
