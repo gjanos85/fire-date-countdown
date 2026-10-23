@@ -8,11 +8,11 @@ framework build, database, API key, or server-side service is required.
 - Live website: https://gjanos85.github.io/fire-date-countdown/
 - Published entry point: `index.html` (inline styles and countdown code).
 - Aircraft: `aircraft-3d.js` (WebGL), `aircraft-fallback-3d.js` (software 3D).
-- Scene: `ground-crew-3d.js` and `hungary-sun.js`.
+- Scene: `hungary-sun.js`; the Hungarian flag's snowcap is inline SVG/CSS.
 - `fire-countdown.html` is an older, retained standalone file, not the Pages entry point.
 
 Read [AGENTS.md](AGENTS.md) before making changes. The full source, generated
-aircraft/crew geometry, and vector sun are in Git; there are no required files
+aircraft geometry, vector sun, and flag snow are in Git; there are no required files
 outside this repository. Google Fonts is the only external visual resource
 (`fonts.googleapis.com` and `fonts.gstatic.com`); fallback fonts remain available.
 
@@ -31,7 +31,7 @@ There is no install or build step. Stop the server when finished.
 
 The automated checks cover JavaScript syntax, referenced local scripts, and the
 sun's timeline/pause/reduced-motion states. They do **not** replace visual checks:
-review both flight directions and endpoints, worker contact/forward exit, the
+review both flight directions and airport turns, absence of ground crew, flag snow, the
 faceless pre-arrival sun and post-touchdown smile, pause/resume, reduced motion,
 and desktop plus narrow (for example 390px) layouts. Check browser errors. Test
 both aircraft renderers when possible; disclose if only one was exercised.

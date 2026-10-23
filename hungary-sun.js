@@ -16,8 +16,8 @@
     if(key===previous)return;
     previous=key;
     const phase=progress*100;
-    // Touchdown is 44%; Hungary departure begins at 55.5% of this same loop.
-    const smile=motion.matches?0:ease((phase-44)/.9)*(1-ease((phase-55.5)/1.2));
+    // Touchdown is 44%; depart at 50.5%, shortly after the solid 3D turn.
+    const smile=motion.matches?0:ease((phase-44)/.9)*(1-ease((phase-50.5)/1.2));
     const pulse=motion.matches?0:Math.sin(progress*Math.PI*2*4);
     const shimmer=motion.matches ? .5 : .5+.15*Math.sin(progress*Math.PI*2*7);
     sun.style.setProperty('--sun-turn',`${motion.matches?12:progress*360}deg`);
@@ -28,7 +28,7 @@
     sun.style.setProperty('--sun-shimmer',String(shimmer));
     sun.style.setProperty('--sun-smile',String(smile));
     // The entire face is hidden (not merely transparent) before touchdown.
-    sun.dataset.welcoming=String(!motion.matches&&phase>=44&&phase<56.7);
+    sun.dataset.welcoming=String(!motion.matches&&phase>=44&&phase<51.7);
   }
   motion.addEventListener('change',()=>{previous='';});
   requestAnimationFrame(frame);

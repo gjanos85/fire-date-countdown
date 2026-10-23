@@ -56,7 +56,7 @@
     tube([[.125,.11],[.13,.085],[-.015,.075]],-.22,side*1.15,metal,24);
     const inlet = Array.from({length:24},(_,j) => [-.02,-.22+Math.cos(j*Math.PI/12)*.075,side*1.15+Math.sin(j*Math.PI/12)*.075]);
     add(inlet,[12,24,34]);
-    // Landing gear remains grounded through the crew's turnaround.
+    // Landing gear supports the airport turnaround.
     tube([[1.45,.035],[1.49,.035]],-.41,side*.09,metal,8);
     add([[1.45,-.19,side*.09],[1.49,-.19,side*.09],[1.49,-.43,side*.09],[1.45,-.43,side*.09]],metal);
     tube([[-.55,.06],[-.47,.06]],-.43,side*.28,dark,12);

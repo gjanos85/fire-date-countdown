@@ -206,8 +206,8 @@
     const p=motion.matches?23:(master?.effect.getComputedTiming().progress??0)*100;
     const ease=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
     let yaw=p<46?0:p<49?-Math.PI*ease((p-46)/3):p<96?-Math.PI:p<99?-Math.PI*(1+ease((p-96)/3)):-Math.PI*2;
-    const pitch=interpolate(p,[[0,0],[5,0],[10,.14],[14,.14],[23,0],[31,0],[39,-.06],[44,0],[55,0],[60,.14],[64,.14],[73,0],[81,0],[89,-.06],[94,0],[100,0]]);
-    const gear=motion.matches?0:interpolate(p,[[0,1],[10,1],[16,0],[34,0],[40,1],[60,1],[66,0],[84,0],[90,1],[100,1]]);
+    const pitch=interpolate(p,[[0,0],[.5,0],[5,.14],[9,.14],[18,0],[31,0],[39,-.06],[44,0],[50,0],[55,.14],[59,.14],[68,0],[81,0],[89,-.06],[94,0],[100,0]]);
+    const gear=motion.matches?0:interpolate(p,[[0,1],[5,1],[11,0],[34,0],[40,1],[55,1],[61,0],[84,0],[90,1],[100,1]]);
     const pose=`${yaw.toFixed(5)}:${pitch.toFixed(5)}:${gear.toFixed(4)}`;
     if(pose===lastPose&&!dirty)return;
     lastPose=pose;dirty=false;

@@ -17,6 +17,11 @@ for (const [index, [, attributes, body]] of scripts.entries()) {
 }
 assert(!html.includes('id="local-animation-review"'), 'Remove temporary animation review overrides');
 assert(html.includes('.sun-expression { visibility: hidden; opacity: 0;'), 'Face must be hidden before the sun script runs');
+assert(!/ground-crew|crew-walker|crew-canvas|crew-approach|crew-depth/.test(html), 'No crew markup, styles, or script hooks');
+assert(!fs.existsSync(path.join(root, 'ground-crew-3d.js')), 'Obsolete crew renderer was removed');
+assert.equal([...html.matchAll(/class="flag-snow"/g)].length, 1, 'One decorative flag snowcap');
+assert.match(html, /side-flag-hungary[\s\S]*?class="flag-snow"/, 'Snow sits on Hungary only');
+assert(!html.includes('aircraft-front'), 'No separate front-view overlay');
 
 let phase = 0, nextFrame, time = 0, updates = 0;
 const values = {};
@@ -36,8 +41,9 @@ for (const percent of [0, 5, 25, 43, 43.999]) {
 assert(sample(44.5) > 0 && sample(44.5) < 1, 'Smooth post-touchdown reveal');
 assert.equal(sample(45), 1);
 assert.equal(sun.dataset.welcoming, 'true');
-assert.equal(sample(55), 1);
-assert.equal(sample(57), 0);
+assert.equal(sample(50), 1);
+assert(sample(51) > 0 && sample(51) < 1, 'Smile fades with the earlier departure');
+assert.equal(sample(52), 0);
 assert.equal(sun.dataset.welcoming, 'false');
 assert.equal(sample(94), 0);
 sample(45); sample(0);
@@ -54,5 +60,5 @@ assert.equal(JSON.stringify(values), reduced, 'Reduced-motion sunshine is stable
 assert.equal(sun.dataset.welcoming, 'false');
 motion.matches = false; motion.change();
 assert.equal(sample(45), 1, 'Preference changes restore timeline-driven expressions');
-console.log('PASS: script syntax/assets; initial faceless CSS; sun arrival/reset, pause, and reduced-motion states.');
-console.log('Still required for visual changes: browser checks of aircraft/crew, both airports, motion controls, and responsive layout.');
+console.log('PASS: script syntax/assets; no crew/overlay remnants; Hungary snowcap; faceless CSS; sun arrival/reset, pause, and reduced-motion states.');
+console.log('Still required for visual changes: browser checks of aircraft, both airport turns, flag snow, motion controls, and responsive layout.');

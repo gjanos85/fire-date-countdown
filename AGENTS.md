@@ -15,19 +15,21 @@
   a backward-flying plane. Preserve the software 3D fallback.
 - Windows belong on the upper fuselage. Retain only the smaller wing-mounted
   engines; do not restore the oversized low-hanging engines.
-- The articulated 3D worker enters from outside the relevant airport, approaches
-  and braces/pushes during turnaround, turns naturally, then walks **forward** back
-  outside before takeoff. Keep this choreography at both airports, including the
-  Canada mirror. Preserve readable proportions, shaded clothing and safety gear.
-- Sun stays in the Hungary area: polished warm disk, restrained luminous rays/
+- Ground crew was explicitly removed. Keep the scene free of people, crew
+  animation/runtime hooks, and unnecessary waiting for a nonexistent crew exit.
+- Hungarian flag has a soft, irregular snowcap sitting on its TOP edge, with
+  subtle highlights/cool shading and small overhangs. Preserve readable
+  red-white-green stripes. No snowcap on Canada and no full-page falling snow.
+- Sun is modestly smaller and near the top-right, with responsive padding so
+  rays/glow aren't clipped. Keep its polished warm disk, restrained luminous rays/
   glow/shimmer, no visual obstruction. The **entire face** (eyes, mouth, cheeks,
   etc.) must be hidden before Hungary touchdown, with no faint/ghost face or
   neutral expression. Reveal the friendly smile after touchdown and hide it again
   before the next arrival. Default/load and reduced-motion states are faceless.
-- Flight, crew, sun motion and facial reveal share the same flight timeline.
-  Current 40-second loop: Hungary touchdown 44%, turnaround 46–49%, crew exit
-  complete 55.3%, departure 55.5%; Canada is offset by half a loop. Pause freezes
-  the whole scene, including the sun/face and articulated poses. Reduced motion
+- Flight, sun motion and facial reveal share the same flight timeline.
+  Current 40-second loop: Hungary touchdown 44%, turnaround 46–49%, departure
+  50.5%; Canada is offset by half a loop (departure .5% on the next cycle).
+  Pause freezes the whole scene, including the sun/face and aircraft. Reduced motion
   is stable. Preserve desktop window fit and narrow-screen responsiveness.
 
 ## Development, checks, and release
@@ -36,8 +38,8 @@
   step are required. Never add secrets, local credentials, personal files, or
   hard-coded Mac runtime paths to this public repository.
 - Run `node scripts/check.cjs`, then visual checks proportionate to the change.
-  Check before/after landing, both endpoint crew sequences, pause/resume, reduced
-  motion, desktop/narrow layout, and browser runtime errors. State what was not
+  Check before/after landing, both airport turns, no crew remnants, flag snow,
+  pause/resume, reduced motion, desktop/narrow layout, and browser errors. State what was not
   tested; automated checks alone do not prove visual correctness.
 - Preserve unrelated work. Keep `baseline-blue` and Git history intact. No
   destructive reset, history rewrite, force push, or deletion of the local copy.
