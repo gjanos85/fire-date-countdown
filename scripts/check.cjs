@@ -20,7 +20,12 @@ assert(html.includes('.sun-expression { visibility: hidden; opacity: 0;'), 'Face
 assert(!/ground-crew|crew-walker|crew-canvas|crew-approach|crew-depth/.test(html), 'No crew markup, styles, or script hooks');
 assert(!fs.existsSync(path.join(root, 'ground-crew-3d.js')), 'Obsolete crew renderer was removed');
 assert.equal([...html.matchAll(/class="flag-snow"/g)].length, 1, 'One decorative flag snowcap');
-assert.match(html, /side-flag-hungary[\s\S]*?class="flag-snow"/, 'Snow sits on Hungary only');
+const canadaStart = html.indexOf('<div class="side-flag side-flag-canada">');
+const hungaryStart = html.indexOf('<div class="side-flag side-flag-hungary">');
+const routeStart = html.indexOf('<div class="flight-route"');
+assert(canadaStart > 0 && hungaryStart > canadaStart && routeStart > hungaryStart, 'Both flag containers precede the flight route');
+assert(html.slice(canadaStart, hungaryStart).includes('class="flag-snow"'), 'Canada has the snowcap');
+assert(!html.slice(hungaryStart, routeStart).includes('class="flag-snow"'), 'Hungary stays snow-free');
 assert(!html.includes('aircraft-front'), 'No separate front-view overlay');
 
 let phase = 0, nextFrame, time = 0, updates = 0;
@@ -60,5 +65,5 @@ assert.equal(JSON.stringify(values), reduced, 'Reduced-motion sunshine is stable
 assert.equal(sun.dataset.welcoming, 'false');
 motion.matches = false; motion.change();
 assert.equal(sample(45), 1, 'Preference changes restore timeline-driven expressions');
-console.log('PASS: script syntax/assets; no crew/overlay remnants; Hungary snowcap; faceless CSS; sun arrival/reset, pause, and reduced-motion states.');
+console.log('PASS: script syntax/assets; no crew/overlay remnants; Canada-only snowcap; faceless CSS; sun arrival/reset, pause, and reduced-motion states.');
 console.log('Still required for visual changes: browser checks of aircraft, both airport turns, flag snow, motion controls, and responsive layout.');

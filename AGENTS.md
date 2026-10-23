@@ -17,9 +17,9 @@
   engines; do not restore the oversized low-hanging engines.
 - Ground crew was explicitly removed. Keep the scene free of people, crew
   animation/runtime hooks, and unnecessary waiting for a nonexistent crew exit.
-- Hungarian flag has a soft, irregular snowcap sitting on its TOP edge, with
+- Canadian flag has a soft, irregular snowcap sitting on its TOP edge, with
   subtle highlights/cool shading and small overhangs. Preserve readable
-  red-white-green stripes. No snowcap on Canada and no full-page falling snow.
+  red-white colors and maple leaf. No snowcap on Hungary and no full-page falling snow.
 - Sun is modestly smaller and near the top-right, with responsive padding so
   rays/glow aren't clipped. Keep its polished warm disk, restrained luminous rays/
   glow/shimmer, no visual obstruction. The **entire face** (eyes, mouth, cheeks,

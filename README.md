@@ -8,7 +8,7 @@ framework build, database, API key, or server-side service is required.
 - Live website: https://gjanos85.github.io/fire-date-countdown/
 - Published entry point: `index.html` (inline styles and countdown code).
 - Aircraft: `aircraft-3d.js` (WebGL), `aircraft-fallback-3d.js` (software 3D).
-- Scene: `hungary-sun.js`; the Hungarian flag's snowcap is inline SVG/CSS.
+- Scene: `hungary-sun.js`; the Canadian flag's snowcap is inline SVG/CSS.
 - `fire-countdown.html` is an older, retained standalone file, not the Pages entry point.
 
 Read [AGENTS.md](AGENTS.md) before making changes. The full source, generated
