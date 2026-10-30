@@ -19,12 +19,12 @@
     body::before, body::after { content: ''; position: fixed; z-index: -1; border-radius: 50%; filter: blur(1px); pointer-events: none; }
     body::before { width: 62vw; height: 62vw; left: -22vw; top: -30vw; background: radial-gradient(circle, rgba(241,189,115,.22), transparent 65%); }
     body::after { width: 75vw; height: 75vw; right: -35vw; bottom: -40vw; background: radial-gradient(circle, rgba(75,181,233,.25), transparent 64%); }
-    .shell { position: relative; z-index: 2; width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 34px 0 28px; min-height: 100vh; display: flex; flex-direction: column; }
-    nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+    .shell { position: relative; z-index: 2; width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 22px 0 28px; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
     .mark { display: flex; align-items: center; gap: 11px; font: 500 12px 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; color: var(--mint); }
     .mark-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px var(--gold); }
-    .nav-start { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; min-width: 0; }
-    .exchange-rate { display: grid; gap: 3px; padding-left: 12px; border-left: 2px solid #f1bd7366; }
+    .nav-info { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; max-width: 100%; margin-left: auto; margin-right: 30px; }
+    .exchange-rate { display: flex; align-items: baseline; flex-wrap: wrap; gap: 3px 10px; padding-left: 12px; border-left: 2px solid #f1bd7366; }
     .fx-value { color: #fff2d7; font: 500 15px/1.25 'DM Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .fx-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; color: var(--muted); font: 10px/1.4 'DM Mono', monospace; }
     .fx-meta a { color: var(--mint); text-decoration-color: #bde7e455; text-underline-offset: 3px; }
@@ -83,7 +83,7 @@
       94%, 100% { left: 0; transform: translate(-50%, 0); }
     }
     @media (prefers-reduced-motion: reduce) { .journey-stage * { animation: none !important; } .airplane { left: 50%; transform: translate(-50%, -20px); } .ground-shadow { display: none; } .flight-toggle { display: none; } }
-    .nav-date { display: flex; align-items: baseline; gap: 14px; margin-left: auto; margin-right: 30px; }
+    .nav-date { display: flex; align-items: baseline; gap: 14px; }
     .nav-date .date-value { color: var(--ink); font: 500 clamp(18px, 2.1vw, 29px)/1 'Playfair Display', Georgia, serif; letter-spacing: -.035em; }
     .nav-date .date-day { padding-left: 14px; color: var(--mint); font: 500 clamp(18px, 2.1vw, 29px) 'DM Mono', monospace; letter-spacing: .04em; }
     main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 12px 0 24px; }
@@ -125,20 +125,21 @@
     .journey-stage { overflow: hidden; --airport-inset: max(calc(4% + 40px), calc(var(--aircraft-width) / 2 + 44px)); }
     .flag-snow { position: absolute; z-index: 2; top: -12px; left: -5%; width: 110%; height: 16px; overflow: visible; pointer-events: none; filter: drop-shadow(0 1px 1px #09213f66); }
     @media (max-width: 650px) { .journey-stage { --airport-inset: max(calc(4% + 30px), calc(var(--aircraft-width) / 2 + 40px)); } .flag-snow { top: -10px; height: 14px; } }
+    @media (max-width: 650px) { .nav-info { width: 100%; margin: 0; gap: 6px; } }
   </style>
 </head>
 <body>
   <div class="shell">
     <nav>
-      <div class="nav-start">
+      <div class="mark"><span class="mark-dot"></span> The freedom clock</div>
+      <div class="nav-info">
+        <div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
         <section class="exchange-rate" id="exchange-rate" data-state="loading" role="status" aria-live="polite" aria-atomic="true" aria-busy="true" aria-label="CAD to HUF daily reference rate" title="Daily reference rate. Bank and card conversion prices may differ.">
           <strong class="fx-value" id="fx-value">CAD → HUF · Loading…</strong>
           <div class="fx-meta"><span><span id="fx-status">Daily reference</span><time id="fx-date" hidden></time></span><span aria-hidden="true">·</span><a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">Frankfurter</a></div>
           <noscript><span class="fx-meta">Enable JavaScript to fetch the rate.</span></noscript>
         </section>
-        <div class="mark"><span class="mark-dot"></span> The freedom clock</div>
       </div>
-      <div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
     </nav>
     <section class="journey-stage" aria-label="Air Canada inspired round-trip flight between snow-capped Canada and Hungary">
       <span class="hungary-sun" aria-hidden="true" data-welcoming="false">

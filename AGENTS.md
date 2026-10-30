@@ -31,7 +31,8 @@
   50.5%; Canada is offset by half a loop (departure .5% on the next cycle).
   Pause freezes the whole scene, including the sun/face and aircraft. Reduced motion
   is stable. Preserve desktop window fit and narrow-screen responsiveness.
-- Top-left currency widget uses `exchange-rate.js` to fetch CAD → HUF daily
+- Currency widget sits directly below and aligned with the current date/weekday
+  in the header. It uses `exchange-rate.js` to fetch CAD → HUF daily
   reference rates from Frankfurter v2 on each page opening and bfcache return.
   Display the source's actual rate date and provider link. Do not hardcode a rate,
   label it real-time, or imply a bank/card conversion price. No key, paid service,

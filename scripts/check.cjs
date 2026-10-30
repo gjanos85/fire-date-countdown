@@ -27,6 +27,7 @@ assert(canadaStart > 0 && hungaryStart > canadaStart && routeStart > hungaryStar
 assert(html.slice(canadaStart, hungaryStart).includes('class="flag-snow"'), 'Canada has the snowcap');
 assert(!html.slice(hungaryStart, routeStart).includes('class="flag-snow"'), 'Hungary stays snow-free');
 assert(!html.includes('aircraft-front'), 'No separate front-view overlay');
+assert.match(html, /class="nav-info">\s*<div class="nav-date">[\s\S]*?<section class="exchange-rate"/, 'Currency widget belongs below the current date');
 
 let phase = 0, nextFrame, time = 0, updates = 0;
 const values = {};
