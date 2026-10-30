@@ -67,3 +67,4 @@ motion.matches = false; motion.change();
 assert.equal(sample(45), 1, 'Preference changes restore timeline-driven expressions');
 console.log('PASS: script syntax/assets; no crew/overlay remnants; Canada-only snowcap; faceless CSS; sun arrival/reset, pause, and reduced-motion states.');
 console.log('Still required for visual changes: browser checks of aircraft, both airport turns, flag snow, motion controls, and responsive layout.');
+require('./check-exchange-rate.cjs')().catch(error => { console.error(error); process.exitCode = 1; });

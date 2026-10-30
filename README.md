@@ -9,12 +9,21 @@ framework build, database, API key, or server-side service is required.
 - Published entry point: `index.html` (inline styles and countdown code).
 - Aircraft: `aircraft-3d.js` (WebGL), `aircraft-fallback-3d.js` (software 3D).
 - Scene: `hungary-sun.js`; the Canadian flag's snowcap is inline SVG/CSS.
+- Currency widget: `exchange-rate.js` (CAD → HUF daily reference rate).
 - `fire-countdown.html` is an older, retained standalone file, not the Pages entry point.
 
 Read [AGENTS.md](AGENTS.md) before making changes. The full source, generated
 aircraft geometry, vector sun, and flag snow are in Git; there are no required files
 outside this repository. Google Fonts is the only external visual resource
 (`fonts.googleapis.com` and `fonts.gstatic.com`); fallback fonts remain available.
+The optional currency widget requests `https://api.frankfurter.dev/v2/rate/cad/huf`
+directly in the browser on load and on back/forward-cache restoration. It shows
+the returned rate date and Frankfurter attribution, not a live bank conversion
+quote. No key or install is needed. Browser cache is bypassed; there is no saved
+quote fallback or background polling. An eight-second deadline or invalid/failed
+response shows “unavailable” without disrupting the page. Preview/network policy
+must allow `api.frankfurter.dev` for successful rate loading; offline preview of
+the rest of the site still works. Provider documentation: https://frankfurter.dev/javascript/
 
 ## Preview and checks
 
@@ -30,7 +39,10 @@ http://127.0.0.1:8766/. Serve only this project directory, not a home directory.
 There is no install or build step. Stop the server when finished.
 
 The automated checks cover JavaScript syntax, referenced local scripts, and the
-sun's timeline/pause/reduced-motion states. They do **not** replace visual checks:
+sun's timeline/pause/reduced-motion states, plus mocked currency success,
+validation, timeout/failure, opening/bfcache refresh and request-race cases. The
+currency fixtures are synthetic tests, never values shipped into the widget.
+These checks do **not** replace visual checks:
 review both flight directions and airport turns, absence of ground crew, flag snow, the
 faceless pre-arrival sun and post-touchdown smile, pause/resume, reduced motion,
 and desktop plus narrow (for example 390px) layouts. Check browser errors. Test

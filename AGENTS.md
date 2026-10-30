@@ -31,6 +31,13 @@
   50.5%; Canada is offset by half a loop (departure .5% on the next cycle).
   Pause freezes the whole scene, including the sun/face and aircraft. Reduced motion
   is stable. Preserve desktop window fit and narrow-screen responsiveness.
+- Top-left currency widget uses `exchange-rate.js` to fetch CAD → HUF daily
+  reference rates from Frankfurter v2 on each page opening and bfcache return.
+  Display the source's actual rate date and provider link. Do not hardcode a rate,
+  label it real-time, or imply a bank/card conversion price. No key, paid service,
+  persistent quote cache, or animation-frame polling. Preserve bounded timeout,
+  pair/positive-number/calendar-date validation, and loading/unavailable states
+  independent of the countdown/flight. Keep the widget clear of the scene/date.
 
 ## Development, checks, and release
 

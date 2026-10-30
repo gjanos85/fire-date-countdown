@@ -23,6 +23,13 @@
     nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
     .mark { display: flex; align-items: center; gap: 11px; font: 500 12px 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; color: var(--mint); }
     .mark-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 18px var(--gold); }
+    .nav-start { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; min-width: 0; }
+    .exchange-rate { display: grid; gap: 3px; padding-left: 12px; border-left: 2px solid #f1bd7366; }
+    .fx-value { color: #fff2d7; font: 500 15px/1.25 'DM Mono', monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .fx-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px; color: var(--muted); font: 10px/1.4 'DM Mono', monospace; }
+    .fx-meta a { color: var(--mint); text-decoration-color: #bde7e455; text-underline-offset: 3px; }
+    .fx-meta a:hover, .fx-meta a:focus-visible { color: var(--gold); }
+    .exchange-rate[data-state="loading"] .fx-value, .exchange-rate[data-state="unavailable"] .fx-value { color: var(--muted); }
     .today { color: var(--muted); font: 12px 'DM Mono', monospace; }
     .flags { position: relative; display: flex; align-items: flex-end; gap: 12px; padding-top: 18px; }
     .flag { width: 80px; height: 54px; display: grid; align-items: center; border-radius: 3px; overflow: hidden; box-shadow: 0 5px 18px rgba(0,0,0,.18); }
@@ -122,7 +129,17 @@
 </head>
 <body>
   <div class="shell">
-    <nav><div class="mark"><span class="mark-dot"></span> The freedom clock</div><div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div></nav>
+    <nav>
+      <div class="nav-start">
+        <section class="exchange-rate" id="exchange-rate" data-state="loading" role="status" aria-live="polite" aria-atomic="true" aria-busy="true" aria-label="CAD to HUF daily reference rate" title="Daily reference rate. Bank and card conversion prices may differ.">
+          <strong class="fx-value" id="fx-value">CAD → HUF · Loading…</strong>
+          <div class="fx-meta"><span><span id="fx-status">Daily reference</span><time id="fx-date" hidden></time></span><span aria-hidden="true">·</span><a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">Frankfurter</a></div>
+          <noscript><span class="fx-meta">Enable JavaScript to fetch the rate.</span></noscript>
+        </section>
+        <div class="mark"><span class="mark-dot"></span> The freedom clock</div>
+      </div>
+      <div class="nav-date"><span class="date-value" id="current-date">—</span><span class="date-day" id="current-day">—</span></div>
+    </nav>
     <section class="journey-stage" aria-label="Air Canada inspired round-trip flight between snow-capped Canada and Hungary">
       <span class="hungary-sun" aria-hidden="true" data-welcoming="false">
         <svg class="sun-rays" viewBox="-38 -38 76 76" fill="none" stroke="#ffe3a3" stroke-linecap="round">
@@ -184,6 +201,7 @@
   <script src="aircraft-3d.js"></script>
   <script src="aircraft-fallback-3d.js"></script>
   <script src="hungary-sun.js"></script>
+  <script src="exchange-rate.js"></script>
   <script>
     // May 18, 2033 at midnight in Toronto (EDT, UTC−04:00).
     const start = new Date('2023-05-18T00:00:00-04:00').getTime();
